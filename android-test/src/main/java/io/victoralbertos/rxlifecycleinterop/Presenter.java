@@ -10,37 +10,48 @@
  * the License.
  */
 
-package io.victoralbertos.rxlifecycleinterop.mvp;
+package io.victoralbertos.rxlifecycleinterop;
 
+import android.support.annotation.VisibleForTesting;
 import io.reactivex.BackpressureStrategy;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.victoralbertos.rxlifecycle_interop.LifecycleTransformer2x;
-import io.victoralbertos.rxlifecycleinterop.TestLogger;
-import io.victoralbertos.rxlifecycleinterop.WaitTime;
 import java.util.concurrent.TimeUnit;
 
-public final class PresenterSingle {
+public final class Presenter {
   private View view;
+  @VisibleForTesting public final static int WAIT_TIME = 2;
 
-  void onCreateView(View view) {
+  public void onCreateView(View view) {
     this.view = view;
 
+    Observable.interval(WAIT_TIME, TimeUnit.SECONDS)
+        .compose(view.getLifeCycle(BackpressureStrategy.LATEST))
+        .subscribe(TestLogger.Instance::printObservableOnCreate);
+
     Single.just(1)
-        .delay(WaitTime.SECONDS_2, TimeUnit.SECONDS)
+        .delay(WAIT_TIME, TimeUnit.SECONDS)
         .compose(view.getLifeCycle(BackpressureStrategy.LATEST).forSingle())
-        .subscribe(number -> TestLogger.Instance.show(TestLogger.Event.OnCreate, String.valueOf(number)),
-            ignored -> {});
+        .subscribe(TestLogger.Instance::printSingleOnCreate,
+            ignored -> {
+            });
   }
 
-  void onResume() {
+  public void onResume() {
+    Observable.interval(WAIT_TIME, TimeUnit.SECONDS)
+        .compose(view.getLifeCycle(BackpressureStrategy.LATEST))
+        .subscribe(TestLogger.Instance::printObservableOnResume);
+
     Single.just(1)
-        .delay(WaitTime.SECONDS_2, TimeUnit.SECONDS)
+        .delay(WAIT_TIME, TimeUnit.SECONDS)
         .compose(view.getLifeCycle(BackpressureStrategy.LATEST).forSingle())
-        .subscribe(number -> TestLogger.Instance.show(TestLogger.Event.OnResume, String.valueOf(number)),
-            ignored -> {});
+        .subscribe(TestLogger.Instance::printSingleOnResume,
+            ignored -> {
+            });
   }
 
-  interface View {
+  public interface View {
     <T> LifecycleTransformer2x<T> getLifeCycle(BackpressureStrategy strategy);
   }
 }

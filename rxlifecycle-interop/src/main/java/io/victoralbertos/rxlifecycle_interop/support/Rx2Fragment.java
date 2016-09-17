@@ -19,8 +19,8 @@ import com.trello.rxlifecycle.components.support.RxFragment;
 import hu.akarnokd.rxjava.interop.RxJavaInterop;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.ObservableTransformer;
+import io.victoralbertos.rxlifecycle_interop.LifecycleTransformer2x;
+import io.victoralbertos.rxlifecycle_interop.internal.LifecycleTransformer2xBehaviour;
 
 public class Rx2Fragment extends RxFragment {
 
@@ -32,29 +32,16 @@ public class Rx2Fragment extends RxFragment {
 
   @NonNull
   @CheckResult
-  public final <T> ObservableTransformer<T, T> bindUntilEvent2x(
+  public final <T> LifecycleTransformer2x<T> bindUntilEvent2x(
       @NonNull final FragmentEvent event, @NonNull final BackpressureStrategy strategy) {
-    return new ObservableTransformer<T, T>() {
-      @Override public ObservableSource<T> apply(Observable<T> source) throws Exception {
-        rx.Observable<T> rxObservable = RxJavaInterop.toV1Observable(source, strategy);
-        rx.Observable<T> observableBound =
-            (rx.Observable<T>) rxObservable.compose(bindUntilEvent(event));
-        return RxJavaInterop.toV2Observable(observableBound);
-      }
-    };
+    return new LifecycleTransformer2xBehaviour<>(bindUntilEvent(event),
+        bindUntilEvent(event).forSingle(), strategy);
   }
 
-  @NonNull
   @CheckResult
-  public final <T> ObservableTransformer<T, T> bindToLifecycle2x(
+  public final <T> LifecycleTransformer2x<T> bindToLifecycle2x(
       @NonNull final BackpressureStrategy strategy) {
-    return new ObservableTransformer<T, T>() {
-      @Override public ObservableSource<T> apply(Observable<T> source) throws Exception {
-        rx.Observable<T> rxObservable = RxJavaInterop.toV1Observable(source, strategy);
-        rx.Observable<T> observableBound =
-            (rx.Observable<T>) rxObservable.compose(bindToLifecycle());
-        return RxJavaInterop.toV2Observable(observableBound);
-      }
-    };
+    return new LifecycleTransformer2xBehaviour<>(bindToLifecycle(),
+        bindToLifecycle().forSingle(), strategy);
   }
 }

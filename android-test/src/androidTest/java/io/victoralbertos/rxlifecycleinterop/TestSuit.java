@@ -1,8 +1,6 @@
 package io.victoralbertos.rxlifecycleinterop;
 
 import android.support.test.rule.ActivityTestRule;
-import io.victoralbertos.rxlifecycleinterop.mvp.ActivityView;
-import io.victoralbertos.rxlifecycleinterop.mvp.FragmentView;
 import io.victoralbertos.rxlifecycleinterop.support.FragmentActivitySample;
 import io.victoralbertos.rxlifecycleinterop.support.SampleAppCompatActivity;
 import io.victoralbertos.rxlifecycleinterop.support.SampleAppCompatDialogFragment;
@@ -19,9 +17,7 @@ import org.junit.runners.Suite;
     TestSuit.Support.SampleAppCompatActivityTest.class,
     TestSuit.Support.SampleAppCompatDialogFragmentTest.class,
     TestSuit.Support.SampleDialogFragmentTest.class,
-    TestSuit.Support.SampleFragmentTest.class,
-    TestSuit.Mvp.ActivityViewTest.class,
-    TestSuit.Mvp.FragmentViewTest.class
+    TestSuit.Support.SampleFragmentTest.class
 })
 public class TestSuit {
 
@@ -69,18 +65,6 @@ public class TestSuit {
       @Rule public ActivityTestRule<io.victoralbertos.rxlifecycleinterop.support.SampleFragment>
           mActivityRule =
           new ActivityTestRule<>(io.victoralbertos.rxlifecycleinterop.support.SampleFragment.class);
-    }
-  }
-
-  public static final class Mvp {
-    public static final class ActivityViewTest extends LifeCycleTest {
-      @Rule public ActivityTestRule<ActivityView> mActivityRule =
-          new ActivityTestRule<>(ActivityView.class);
-    }
-
-    public static final class FragmentViewTest extends LifeCycleTest {
-      @Rule public ActivityTestRule<FragmentView> mActivityRule =
-          new ActivityTestRule<>(FragmentView.class);
     }
   }
 }

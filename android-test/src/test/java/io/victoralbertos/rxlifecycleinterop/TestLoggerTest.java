@@ -28,50 +28,88 @@ public final class TestLoggerTest {
     TestLogger.Instance.clearEvents();
   }
 
-  @Test public void Verify_On_Resume() {
-    TestLogger.Instance.assertNoValuesOnCreate();
-    TestLogger.Instance.assertNoValuesOnResume();
+  @Test public void Verify_On_Resume_Observable() {
+    TestLogger.Instance.assertObservableNoValuesOnCreate();
+    TestLogger.Instance.assertObservableNoValuesOnResume();
 
-    TestLogger.Instance.show(TestLogger.Event.OnResume, "");
+    TestLogger.Instance.printObservableOnResume(1);
 
-    TestLogger.Instance.assertNoValuesOnCreate();
-    TestLogger.Instance.assertValuesOnResume();
+    TestLogger.Instance.assertObservableNoValuesOnCreate();
+    TestLogger.Instance.assertObservableValuesOnResume();
 
     TestLogger.Instance.clearEvents();
 
-    TestLogger.Instance.assertNoValuesOnCreate();
-    TestLogger.Instance.assertNoValuesOnResume();
+    TestLogger.Instance.assertObservableNoValuesOnCreate();
+    TestLogger.Instance.assertObservableNoValuesOnResume();
   }
 
-  @Test public void Verify_On_Create() {
-    TestLogger.Instance.assertNoValuesOnCreate();
-    TestLogger.Instance.assertNoValuesOnResume();
+  @Test public void Verify_On_Create_Observable() {
+    TestLogger.Instance.assertObservableNoValuesOnCreate();
+    TestLogger.Instance.assertObservableNoValuesOnResume();
 
-    TestLogger.Instance.show(TestLogger.Event.OnCreate, "");
+    TestLogger.Instance.printObservableOnCreate(1);
 
-    TestLogger.Instance.assertValuesOnCreate();
-    TestLogger.Instance.assertNoValuesOnResume();
+    TestLogger.Instance.assertObservableValuesOnCreate();
+    TestLogger.Instance.assertObservableNoValuesOnResume();
 
     TestLogger.Instance.clearEvents();
 
-    TestLogger.Instance.assertNoValuesOnCreate();
-    TestLogger.Instance.assertNoValuesOnResume();
+    TestLogger.Instance.assertObservableNoValuesOnCreate();
+    TestLogger.Instance.assertObservableNoValuesOnResume();
   }
 
-  @Test public void Verify_Both() {
-    TestLogger.Instance.assertNoValuesOnCreate();
-    TestLogger.Instance.assertNoValuesOnResume();
+  @Test public void Verify_On_Resume_Single() {
+    TestLogger.Instance.assertSingleNoValuesOnCreate();
+    TestLogger.Instance.assertSingleNoValuesOnResume();
 
-    TestLogger.Instance.show(TestLogger.Event.OnCreate, "");
-    TestLogger.Instance.show(TestLogger.Event.OnResume, "");
+    TestLogger.Instance.printSingleOnResume(1);
 
-    TestLogger.Instance.assertValuesOnCreate();
-    TestLogger.Instance.assertValuesOnResume();
+    TestLogger.Instance.assertSingleNoValuesOnCreate();
+    TestLogger.Instance.assertSingleValuesOnResume();
 
     TestLogger.Instance.clearEvents();
 
-    TestLogger.Instance.assertNoValuesOnCreate();
-    TestLogger.Instance.assertNoValuesOnResume();
+    TestLogger.Instance.assertSingleNoValuesOnCreate();
+    TestLogger.Instance.assertSingleNoValuesOnResume();
+  }
+
+  @Test public void Verify_On_Create_Single() {
+    TestLogger.Instance.assertSingleNoValuesOnCreate();
+    TestLogger.Instance.assertSingleNoValuesOnResume();
+
+    TestLogger.Instance.printSingleOnCreate(1);
+
+    TestLogger.Instance.assertSingleValuesOnCreate();
+    TestLogger.Instance.assertSingleNoValuesOnResume();
+
+    TestLogger.Instance.clearEvents();
+
+    TestLogger.Instance.assertSingleNoValuesOnCreate();
+    TestLogger.Instance.assertSingleNoValuesOnResume();
+  }
+
+  @Test public void Verify_All() {
+    TestLogger.Instance.assertObservableNoValuesOnCreate();
+    TestLogger.Instance.assertObservableNoValuesOnResume();
+    TestLogger.Instance.assertSingleNoValuesOnCreate();
+    TestLogger.Instance.assertSingleNoValuesOnResume();
+
+    TestLogger.Instance.printObservableOnResume(1);
+    TestLogger.Instance.printObservableOnCreate(1);
+    TestLogger.Instance.printSingleOnResume(1);
+    TestLogger.Instance.printSingleOnCreate(1);
+
+    TestLogger.Instance.assertObservableValuesOnCreate();
+    TestLogger.Instance.assertObservableValuesOnResume();
+    TestLogger.Instance.assertSingleValuesOnCreate();
+    TestLogger.Instance.assertSingleValuesOnResume();
+
+    TestLogger.Instance.clearEvents();
+
+    TestLogger.Instance.assertObservableNoValuesOnCreate();
+    TestLogger.Instance.assertObservableNoValuesOnResume();
+    TestLogger.Instance.assertSingleNoValuesOnCreate();
+    TestLogger.Instance.assertSingleNoValuesOnResume();
   }
 
 }

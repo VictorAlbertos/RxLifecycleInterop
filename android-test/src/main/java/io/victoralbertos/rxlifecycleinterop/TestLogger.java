@@ -23,47 +23,70 @@ import static org.junit.Assert.assertThat;
 public enum TestLogger {
   Instance;
 
-  private int eventsOnResume;
-  private int eventsOnCreate;
+  private int eventsObservableOnResume;
+  private int eventsSingleOnResume;
+  private int eventsObservableOnCreate;
+  private int eventsSingleOnCreate;
 
-  public void show(Event event, String message) {
-    if (event == Event.OnCreate) eventsOnCreate++;
-    else eventsOnResume++;
-    Log.d(event.toString(), message);
+  public void printObservableOnResume(long times) {
+    eventsObservableOnResume++;
+    Log.d("ObservableOnResume", String.valueOf(times));
   }
 
-  public void assertNoValuesOnResume() {
-    assertThat(eventsOnResume, is(0));
+  public void printObservableOnCreate(long times) {
+    eventsObservableOnCreate++;
+    Log.d("ObservableOnCreate", String.valueOf(times));
   }
 
-  public void assertNoValuesOnCreate() {
-    assertThat(eventsOnCreate, is(0));
+  public void printSingleOnResume(int times) {
+    eventsSingleOnResume++;
+    Log.d("SingleOnResume", String.valueOf(times));
   }
 
-  public void assertValuesOnResume() {
-    assertThat(eventsOnResume, is(not(0)));
+  public void printSingleOnCreate(int times) {
+    eventsSingleOnCreate++;
+    Log.d("SingleOnCreate", String.valueOf(times));
   }
 
-  public void assertValuesOnCreate() {
-    assertThat(eventsOnCreate, is(not(0)));
+  public void assertObservableNoValuesOnResume() {
+    assertThat(eventsObservableOnResume, is(0));
   }
+
+  public void assertObservableNoValuesOnCreate() {
+    assertThat(eventsObservableOnCreate, is(0));
+  }
+
+  public void assertObservableValuesOnResume() {
+    assertThat(eventsObservableOnResume, is(not(0)));
+  }
+
+  public void assertObservableValuesOnCreate() {
+    assertThat(eventsObservableOnCreate, is(not(0)));
+  }
+
+  public void assertSingleNoValuesOnResume() {
+    assertThat(eventsSingleOnResume, is(0));
+  }
+
+  public void assertSingleNoValuesOnCreate() {
+    assertThat(eventsSingleOnCreate, is(0));
+  }
+
+
+  public void assertSingleValuesOnResume() {
+    assertThat(eventsSingleOnResume, is(not(0)));
+  }
+
+  public void assertSingleValuesOnCreate() {
+    assertThat(eventsSingleOnCreate, is(not(0)));
+  }
+
 
   public void clearEvents() {
-    eventsOnCreate = 0;
-    eventsOnResume = 0;
-  }
-
-  public enum Event {
-    OnResume("OnResume"), OnCreate("OnCreate");
-    private final String text;
-
-    Event(final String text) {
-      this.text = text;
-    }
-
-    @Override public String toString() {
-      return text;
-    }
+    eventsObservableOnCreate = 0;
+    eventsObservableOnResume = 0;
+    eventsSingleOnCreate = 0;
+    eventsSingleOnResume = 0;
   }
 
 }

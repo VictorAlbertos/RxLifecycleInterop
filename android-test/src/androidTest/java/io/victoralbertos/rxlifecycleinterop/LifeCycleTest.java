@@ -40,29 +40,30 @@ public abstract class LifeCycleTest {
     TestLogger.Instance.clearEvents();
   }
 
-  @Test public void Verify_Failure() {
-    TestLogger.Instance.assertNoValuesOnResume();
-    TestLogger.Instance.assertNoValuesOnCreate();
-  }
-
   @Test public void Verify_Idle() {
     waitTime();
-    TestLogger.Instance.assertValuesOnResume();
-    TestLogger.Instance.assertValuesOnCreate();
+    TestLogger.Instance.assertObservableValuesOnResume();
+    TestLogger.Instance.assertObservableValuesOnCreate();
+    TestLogger.Instance.assertSingleValuesOnResume();
+    TestLogger.Instance.assertSingleValuesOnCreate();
   }
 
   @Test public void Verify_On_Resume_Home() {
     uiDevice.pressHome();
     waitTime();
-    TestLogger.Instance.assertNoValuesOnResume();
-    TestLogger.Instance.assertValuesOnCreate();
+    TestLogger.Instance.assertObservableNoValuesOnResume();
+    TestLogger.Instance.assertObservableValuesOnCreate();
+    TestLogger.Instance.assertSingleNoValuesOnResume();
+    TestLogger.Instance.assertSingleValuesOnCreate();
   }
 
   @Test public void Verify_On_Resume_Sleep() throws RemoteException {
     uiDevice.sleep();
     waitTime();
-    TestLogger.Instance.assertNoValuesOnResume();
-    TestLogger.Instance.assertValuesOnCreate();
+    TestLogger.Instance.assertObservableNoValuesOnResume();
+    TestLogger.Instance.assertObservableValuesOnCreate();
+    TestLogger.Instance.assertSingleNoValuesOnResume();
+    TestLogger.Instance.assertSingleValuesOnCreate();
     uiDevice.wakeUp();
   }
 
@@ -71,12 +72,14 @@ public abstract class LifeCycleTest {
     //Dismiss dialog if present
     uiDevice.pressBack();
     waitTime();
-    TestLogger.Instance.assertNoValuesOnResume();
-    TestLogger.Instance.assertNoValuesOnCreate();
+    TestLogger.Instance.assertObservableNoValuesOnResume();
+    TestLogger.Instance.assertObservableNoValuesOnCreate();
+    TestLogger.Instance.assertSingleNoValuesOnResume();
+    TestLogger.Instance.assertSingleNoValuesOnCreate();
   }
 
   private void waitTime() {
-    try {Thread.sleep((WaitTime.SECONDS_2 + 1) * 1000);}
+    try {Thread.sleep((Presenter.WAIT_TIME + 1) * 1000);}
     catch (InterruptedException e) { e.printStackTrace();}
   }
 }

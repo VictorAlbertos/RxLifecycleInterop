@@ -16,29 +16,24 @@ package io.victoralbertos.rxlifecycleinterop.support;
 
 import android.os.Bundle;
 import io.reactivex.BackpressureStrategy;
-import io.reactivex.Observable;
+import io.victoralbertos.rxlifecycle_interop.LifecycleTransformer2x;
 import io.victoralbertos.rxlifecycle_interop.support.Rx2FragmentActivity;
-import io.victoralbertos.rxlifecycleinterop.TestLogger;
-import io.victoralbertos.rxlifecycleinterop.WaitTime;
-import java.util.concurrent.TimeUnit;
+import io.victoralbertos.rxlifecycleinterop.Presenter;
 
-public final class FragmentActivitySample extends Rx2FragmentActivity {
+public final class FragmentActivitySample extends Rx2FragmentActivity implements Presenter.View {
+  private final Presenter presenter = new Presenter();
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
-    Observable.interval(WaitTime.SECONDS_2, TimeUnit.SECONDS)
-        .compose(bindToLifecycle2x(BackpressureStrategy.LATEST))
-        .doOnNext(number -> TestLogger.Instance.show(TestLogger.Event.OnCreate, String.valueOf(number)))
-        .subscribe();
+    presenter.onCreateView(this);
   }
 
   @Override protected void onResume() {
     super.onResume();
+    presenter.onResume();
+  }
 
-    Observable.interval(WaitTime.SECONDS_2, TimeUnit.SECONDS)
-        .compose(bindToLifecycle2x(BackpressureStrategy.LATEST))
-        .doOnNext(number -> TestLogger.Instance.show(TestLogger.Event.OnResume, String.valueOf(number)))
-        .subscribe();
+  @Override public <T> LifecycleTransformer2x<T> getLifeCycle(BackpressureStrategy strategy) {
+    return bindToLifecycle2x(strategy);
   }
 }
