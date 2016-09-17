@@ -43,4 +43,4 @@ RxLifecycleInterop only brings support for [rxlifecycle-android](https://github.
 | support.RxFragmentActivity  | support.Rx2FragmentActivity  |
 
 
-For further instructions about how to use RxLifecycle, refer to [RxLifecycle's docs](https://github.com/trello/RxLifecycle). RxLifecycleInterop also provides an [Android app]() showcasing everyone of the api equivalences.
+For further instructions about how to use RxLifecycle, refer to [RxLifecycle's docs](https://github.com/trello/RxLifecycle). RxLifecycleInterop also provides an [Android app](https://github.com/VictorAlbertos/RxLifecycleInterop/tree/master/android-test) showcasing everyone of the api equivalences.
