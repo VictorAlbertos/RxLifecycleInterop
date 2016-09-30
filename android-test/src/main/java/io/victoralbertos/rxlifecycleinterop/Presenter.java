@@ -14,6 +14,7 @@ package io.victoralbertos.rxlifecycleinterop;
 
 import android.support.annotation.VisibleForTesting;
 import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.victoralbertos.rxlifecycle_interop.LifecycleTransformer2x;
@@ -29,6 +30,10 @@ public final class Presenter {
     Observable.interval(WAIT_TIME, TimeUnit.SECONDS)
         .compose(view.getLifeCycle(BackpressureStrategy.LATEST))
         .subscribe(TestLogger.Instance::printObservableOnCreate);
+
+    Flowable.interval(WAIT_TIME, TimeUnit.SECONDS)
+        .compose(view.getLifeCycle(BackpressureStrategy.LATEST).forFlowable())
+        .subscribe(TestLogger.Instance::printFlowableOnCreate);
 
     Single.just(1)
         .delay(WAIT_TIME, TimeUnit.SECONDS)
@@ -49,6 +54,10 @@ public final class Presenter {
         .subscribe(TestLogger.Instance::printSingleOnResume,
             ignored -> {
             });
+
+    Flowable.interval(WAIT_TIME, TimeUnit.SECONDS)
+        .compose(view.getLifeCycle(BackpressureStrategy.LATEST).forFlowable())
+        .subscribe(TestLogger.Instance::printFlowableOnResume);
   }
 
   public interface View {

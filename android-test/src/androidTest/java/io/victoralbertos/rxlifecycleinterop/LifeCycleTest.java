@@ -46,6 +46,8 @@ public abstract class LifeCycleTest {
     TestLogger.Instance.assertObservableValuesOnCreate();
     TestLogger.Instance.assertSingleValuesOnResume();
     TestLogger.Instance.assertSingleValuesOnCreate();
+    TestLogger.Instance.assertFlowableValuesOnResume();
+    TestLogger.Instance.assertFlowableValuesOnCreate();
   }
 
   @Test public void Verify_On_Resume_Home() {
@@ -55,6 +57,8 @@ public abstract class LifeCycleTest {
     TestLogger.Instance.assertObservableValuesOnCreate();
     TestLogger.Instance.assertSingleNoValuesOnResume();
     TestLogger.Instance.assertSingleValuesOnCreate();
+    TestLogger.Instance.assertFlowableNoValuesOnResume();
+    TestLogger.Instance.assertFlowableValuesOnCreate();
   }
 
   @Test public void Verify_On_Resume_Sleep() throws RemoteException {
@@ -64,6 +68,8 @@ public abstract class LifeCycleTest {
     TestLogger.Instance.assertObservableValuesOnCreate();
     TestLogger.Instance.assertSingleNoValuesOnResume();
     TestLogger.Instance.assertSingleValuesOnCreate();
+    TestLogger.Instance.assertFlowableNoValuesOnResume();
+    TestLogger.Instance.assertFlowableValuesOnCreate();
     uiDevice.wakeUp();
   }
 
@@ -74,8 +80,8 @@ public abstract class LifeCycleTest {
     waitTime();
     TestLogger.Instance.assertObservableNoValuesOnResume();
     TestLogger.Instance.assertObservableNoValuesOnCreate();
-    TestLogger.Instance.assertSingleNoValuesOnResume();
-    TestLogger.Instance.assertSingleNoValuesOnCreate();
+    TestLogger.Instance.assertFlowableNoValuesOnResume();
+    TestLogger.Instance.assertFlowableNoValuesOnCreate();
   }
 
   private void waitTime() {

@@ -14,11 +14,14 @@ package io.victoralbertos.rxlifecycle_interop.internal;
 
 import hu.akarnokd.rxjava.interop.RxJavaInterop;
 import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableTransformer;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.SingleSource;
 import io.reactivex.SingleTransformer;
 import io.victoralbertos.rxlifecycle_interop.LifecycleTransformer2x;
+import org.reactivestreams.Publisher;
 import rx.Single;
 
 public final class LifecycleTransformer2xBehaviour<T> implements LifecycleTransformer2x<T> {
@@ -31,6 +34,17 @@ public final class LifecycleTransformer2xBehaviour<T> implements LifecycleTransf
     this.rxTransformerBound = rxTransformerBound;
     this.rxSingleTransformer = rxSingleTransformer;
     this.strategy = strategy;
+  }
+
+  @Override public <U> FlowableTransformer<U, U> forFlowable() {
+    return new FlowableTransformer<U, U>() {
+      @Override public Publisher<? extends U> apply(Flowable<U> source) throws Exception {
+        rx.Observable<U> rxObservable = RxJavaInterop.toV1Observable(source.toObservable(), strategy);
+        rx.Observable<T> observableBound = rxObservable.compose(
+            (rx.Observable.Transformer<? super U, ? extends T>) rxTransformerBound);
+        return (Publisher<? extends U>) RxJavaInterop.toV2Observable(observableBound).toFlowable(strategy);
+      }
+    };
   }
 
   @Override public <U> SingleTransformer<U, U> forSingle() {

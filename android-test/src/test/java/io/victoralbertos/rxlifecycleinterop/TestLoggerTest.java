@@ -88,21 +88,57 @@ public final class TestLoggerTest {
     TestLogger.Instance.assertSingleNoValuesOnResume();
   }
 
+  @Test public void Verify_On_Resume_Flowable() {
+    TestLogger.Instance.assertFlowableNoValuesOnCreate();
+    TestLogger.Instance.assertFlowableNoValuesOnResume();
+
+    TestLogger.Instance.printFlowableOnResume(1);
+
+    TestLogger.Instance.assertFlowableNoValuesOnCreate();
+    TestLogger.Instance.assertFlowableValuesOnResume();
+
+    TestLogger.Instance.clearEvents();
+
+    TestLogger.Instance.assertFlowableNoValuesOnCreate();
+    TestLogger.Instance.assertFlowableNoValuesOnResume();
+  }
+
+  @Test public void Verify_On_Create_Flowable() {
+    TestLogger.Instance.assertFlowableNoValuesOnCreate();
+    TestLogger.Instance.assertFlowableNoValuesOnResume();
+
+    TestLogger.Instance.printFlowableOnCreate(1);
+
+    TestLogger.Instance.assertFlowableValuesOnCreate();
+    TestLogger.Instance.assertFlowableNoValuesOnResume();
+
+    TestLogger.Instance.clearEvents();
+
+    TestLogger.Instance.assertFlowableNoValuesOnCreate();
+    TestLogger.Instance.assertFlowableNoValuesOnResume();
+  }
+
   @Test public void Verify_All() {
     TestLogger.Instance.assertObservableNoValuesOnCreate();
     TestLogger.Instance.assertObservableNoValuesOnResume();
     TestLogger.Instance.assertSingleNoValuesOnCreate();
     TestLogger.Instance.assertSingleNoValuesOnResume();
+    TestLogger.Instance.assertFlowableNoValuesOnCreate();
+    TestLogger.Instance.assertFlowableNoValuesOnResume();
 
     TestLogger.Instance.printObservableOnResume(1);
     TestLogger.Instance.printObservableOnCreate(1);
     TestLogger.Instance.printSingleOnResume(1);
     TestLogger.Instance.printSingleOnCreate(1);
+    TestLogger.Instance.printFlowableOnResume(1);
+    TestLogger.Instance.printFlowableOnCreate(1);
 
     TestLogger.Instance.assertObservableValuesOnCreate();
     TestLogger.Instance.assertObservableValuesOnResume();
     TestLogger.Instance.assertSingleValuesOnCreate();
     TestLogger.Instance.assertSingleValuesOnResume();
+    TestLogger.Instance.assertFlowableValuesOnCreate();
+    TestLogger.Instance.assertFlowableValuesOnResume();
 
     TestLogger.Instance.clearEvents();
 
@@ -110,6 +146,8 @@ public final class TestLoggerTest {
     TestLogger.Instance.assertObservableNoValuesOnResume();
     TestLogger.Instance.assertSingleNoValuesOnCreate();
     TestLogger.Instance.assertSingleNoValuesOnResume();
+    TestLogger.Instance.assertFlowableNoValuesOnCreate();
+    TestLogger.Instance.assertFlowableNoValuesOnResume();
   }
 
 }
