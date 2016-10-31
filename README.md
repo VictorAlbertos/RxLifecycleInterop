@@ -19,8 +19,8 @@ allprojects {
 Add to app module *gradle.build* file
 ```gradle
 dependencies {
-    compile 'com.github.VictorAlbertos:RxLifecycleInterop:0.0.2'
-    compile 'io.reactivex.rxjava2:rxjava:2.0.0-RC2'
+    compile 'com.github.VictorAlbertos:RxLifecycleInterop:0.0.4'
+    compile 'io.reactivex.rxjava2:rxjava:2.0.0'
 }
 ```
 
