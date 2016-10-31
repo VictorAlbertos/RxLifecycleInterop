@@ -23,10 +23,10 @@ android {
 dependencies {
   compile 'com.android.support:appcompat-v7:24.2.0'
 
-  compile "io.reactivex.rxjava2:rxjava:2.0.0-RC2"
+  compile "io.reactivex.rxjava2:rxjava:2.0.0"
   compile "com.trello:rxlifecycle-android:0.7.0"
   compile "com.trello:rxlifecycle-components:0.7.0"
-  compile "com.github.akarnokd:rxjava2-interop:0.2.0"
+  compile "com.github.akarnokd:rxjava2-interop:0.6.0"
 }
 
 // build a jar with source files

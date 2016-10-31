@@ -38,18 +38,18 @@ public final class LifecycleTransformer2xBehaviour<T> implements LifecycleTransf
 
   @Override public <U> FlowableTransformer<U, U> forFlowable() {
     return new FlowableTransformer<U, U>() {
-      @Override public Publisher<? extends U> apply(Flowable<U> source) throws Exception {
+      @Override public Publisher<U> apply(Flowable<U> source) {
         rx.Observable<U> rxObservable = RxJavaInterop.toV1Observable(source.toObservable(), strategy);
         rx.Observable<T> observableBound = rxObservable.compose(
             (rx.Observable.Transformer<? super U, ? extends T>) rxTransformerBound);
-        return (Publisher<? extends U>) RxJavaInterop.toV2Observable(observableBound).toFlowable(strategy);
+        return (Publisher<U>) RxJavaInterop.toV2Observable(observableBound).toFlowable(strategy);
       }
     };
   }
 
   @Override public <U> SingleTransformer<U, U> forSingle() {
     return new SingleTransformer<U, U>() {
-      @Override public SingleSource<U> apply(io.reactivex.Single<U> source) throws Exception {
+      @Override public SingleSource<U> apply(io.reactivex.Single<U> source) {
         rx.Single<U> rxSourceSingle =
             RxJavaInterop.toV1Single(source);
 
@@ -61,7 +61,7 @@ public final class LifecycleTransformer2xBehaviour<T> implements LifecycleTransf
     };
   }
 
-  @Override public ObservableSource<T> apply(Observable<T> source) throws Exception {
+  @Override public ObservableSource<T> apply(Observable<T> source) {
     rx.Observable<T> rxObservable = RxJavaInterop.toV1Observable(source, strategy);
     rx.Observable<T> observableBound = rxObservable
         .compose((rx.Observable.Transformer<? super T, ? extends T>) rxTransformerBound);
