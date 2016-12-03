@@ -1,4 +1,4 @@
-## [DEPRECATED] Use [RxLifecycle] 2.x (https://github.com/trello/RxLifecycle/tree/2.x).
+## [DEPRECATED] Use [RxLifecycle](https://github.com/trello/RxLifecycle/tree/2.x) 2.x.
 
 # RxLifecycleInterop
 
