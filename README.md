@@ -1,3 +1,5 @@
+## [DEPRECATED] Use [RxLifecycle] 2.x (https://github.com/trello/RxLifecycle/tree/2.x).
+
 # RxLifecycleInterop
 
 RxLifecycleInterop is a **workaround** until [**RxLifecycle**](https://github.com/trello/RxLifecycle) releases a new version supporting RxJava2. This library is just a wrapper around RxLifecycle to convert RxJava 1.x to RxJava 2.x types, honoring as much as possible the original Api. Because it's just a wrapper, both dependencies -1.x and 2.x RxJava- are going to end up in your project.  
